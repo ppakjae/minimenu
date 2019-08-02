@@ -1,5 +1,6 @@
 package com.example.minimenu;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,6 +27,9 @@ public class MenuCartActivity extends AppCompatActivity {
 
     TextView tvAllPrice_Cart;
     TextView tvAllCount_Cart;
+
+    LinearLayout linCart_Cart;
+
 
     ArrayList<String> MenuName = new ArrayList<>();
     ArrayList<String> MenuPrice = new ArrayList<>();
@@ -62,6 +66,8 @@ public class MenuCartActivity extends AppCompatActivity {
 
         imgBack_Cart = (ImageView) findViewById(R.id.imgBack_Cart);
 
+        linCart_Cart = (LinearLayout) findViewById(R.id.linCart_Cart);
+
         listSelect_Cart = (ListView) findViewById(R.id.listSelect_Cart);
         adapter = new MenuSelectedAdapter();
         adapter.readContact();
@@ -70,6 +76,7 @@ public class MenuCartActivity extends AppCompatActivity {
         setListViewHeightBasedOnChildren(listSelect_Cart, 0);
 
         imgBack_Cart.setOnClickListener(Click);
+        linCart_Cart.setOnClickListener(Click);
     }
 
     class MenuSelectedAdapter extends BaseAdapter {
@@ -121,6 +128,9 @@ public class MenuCartActivity extends AppCompatActivity {
                 case R.id.imgBack_Cart:
                     Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
                     startActivity(intent);
+                case R.id.linCart_Cart:
+                    Intent intent1 = new Intent(getApplicationContext(), EmptyActivity.class);
+                    startActivity(intent1);
             }
         }
     };

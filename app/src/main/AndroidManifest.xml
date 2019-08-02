@@ -11,8 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EmptyActivity"></activity>
+        <activity android:name=".QR_Activity"></activity>
+        <activity android:name=".EmptyActivity" />
         <activity android:name=".FinalActivity" />
+        <activity android:name=".MenuActivity"></activity>
+        <activity android:name=".MenuCartActivity"></activity>
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
@@ -24,7 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
