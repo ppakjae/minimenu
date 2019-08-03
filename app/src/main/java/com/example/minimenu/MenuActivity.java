@@ -229,12 +229,12 @@ public class MenuActivity extends AppCompatActivity {
             if (ReceiveActivity == 1) {
                 for (int i = 0; i < adapter.getCount(); i++) {
                     MenuItem item = (MenuItem) adapter.getItem(i);
-                    int count = Integer.parseInt(item.getCount());
-                    Log.d("menu의 개수 인덱스", String.valueOf(i));
-                    if (count != 0) {
+                    int CartCount = Integer.parseInt(item.getCount());
+                    if (CartCount != 0) {
                         imgAdd.setImageResource(R.drawable.plus);
                         imgSub.setImageResource(R.drawable.minus);
                         tvCount.setTextColor(Color.parseColor("#FF4B00"));
+                        Count = CartCount;
                     }
                 }
                 ReceiveActivity = 0;
