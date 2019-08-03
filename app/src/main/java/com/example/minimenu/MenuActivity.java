@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,8 @@ public class MenuActivity extends AppCompatActivity {
 
     ArrayList<MenuItem> Menus = new ArrayList<MenuItem>();
 
+    int ReceiveActivity =0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +58,43 @@ public class MenuActivity extends AppCompatActivity {
 
         setListViewHeightBasedOnChildren(listMenu);
 
+        Intent intent = new Intent(this.getIntent());
+        String Check = "";
+        Check = intent.getStringExtra("Check");
+        if (Check != null) {
+            Log.d("aaa", "Check = NotNull");
+            MoreCart();
+        }
+        else {
+            Log.d("aaa", "Check = NULL");
+        }
+
         imgBack.setOnClickListener(Click);
         linCart.setOnClickListener(Click);
+    }
+
+    private void MoreCart() {
+
+        ArrayList<String> MenuName = new ArrayList<>();
+        ArrayList<String> MenuPrice = new ArrayList<>();
+        ArrayList<String> MenuCount = new ArrayList<>();
+
+        Intent intent = new Intent(this.getIntent());
+
+        MenuName = intent.getStringArrayListExtra("MenuName");
+        MenuPrice = intent.getStringArrayListExtra("MenuPrice");
+        MenuCount = intent.getStringArrayListExtra("MenuCount");
+
+        for (int i =0; i<adapter.getCount() ; i++) {
+            for (int j=0 ; j<MenuName.size() ; j++) {
+                if (MenuName.get(j).equals(Menus.get(i).getMenu())) {
+                    Menus.set(i, new MenuItem(MenuName.get(j), MenuPrice.get(j), MenuCount.get(j)));
+                    Log.d("Count", Menus.get(i).getCount());
+                }
+            }
+        }
+        ReceiveActivity = 1;
+        adapter.notifyDataSetChanged();
     }
 
     class MenuAdapter extends BaseAdapter {
@@ -83,6 +121,7 @@ public class MenuActivity extends AppCompatActivity {
             MenuItem item = Menus.get(position);
             view.setTvMenu(item.getMenu());
             view.setTvPrice(item.getPrice());
+            view.setTvCount(item.getCount());
             return view;
         }
 
@@ -93,6 +132,7 @@ public class MenuActivity extends AppCompatActivity {
         public void readContact() {
             addMenu(new MenuItem("aaa","20,000", "0"));
             addMenu(new MenuItem("ccc","50,000", "0"));
+            addMenu(new MenuItem("bbb", "70,000", "0"));
             addMenu(new MenuItem("bbb", "70,000", "0"));
         }
     }
@@ -186,6 +226,20 @@ public class MenuActivity extends AppCompatActivity {
             imgSub = (ImageView) findViewById(R.id.imgSub);
             tvCount = (TextView) findViewById(R.id.tvCount);
 
+            if (ReceiveActivity == 1) {
+                for (int i = 0; i < adapter.getCount(); i++) {
+                    MenuItem item = (MenuItem) adapter.getItem(i);
+                    int count = Integer.parseInt(item.getCount());
+                    Log.d("menu의 개수 인덱스", String.valueOf(i));
+                    if (count != 0) {
+                        imgAdd.setImageResource(R.drawable.plus);
+                        imgSub.setImageResource(R.drawable.minus);
+                        tvCount.setTextColor(Color.parseColor("#FF4B00"));
+                    }
+                }
+                ReceiveActivity = 0;
+            }
+
             imgAdd.setOnClickListener(Click);
             imgSub.setOnClickListener(Click);
 
@@ -199,6 +253,10 @@ public class MenuActivity extends AppCompatActivity {
 
         public void setTvPrice(String price) {
             tvPrice.setText(price);
+        }
+
+        public void setTvCount(String count) {
+            tvCount.setText(count);
         }
 
         OnClickListener Click = new OnClickListener() {

@@ -1,6 +1,5 @@
 package com.example.minimenu;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,8 +27,7 @@ public class MenuCartActivity extends AppCompatActivity {
     TextView tvAllPrice_Cart;
     TextView tvAllCount_Cart;
 
-    LinearLayout linCart_Cart;
-
+    LinearLayout linMenuAdd_Cart;
 
     ArrayList<String> MenuName = new ArrayList<>();
     ArrayList<String> MenuPrice = new ArrayList<>();
@@ -49,6 +47,7 @@ public class MenuCartActivity extends AppCompatActivity {
 
         tvAllPrice_Cart = (TextView) findViewById(R.id.tvAllPrice_Cart);
         tvAllCount_Cart = (TextView) findViewById(R.id.tvAllCount_Cart);
+        linMenuAdd_Cart = (LinearLayout) findViewById(R.id.linMenuAdd_Cart);
 
         Intent intent = new Intent(this.getIntent());
 
@@ -66,8 +65,6 @@ public class MenuCartActivity extends AppCompatActivity {
 
         imgBack_Cart = (ImageView) findViewById(R.id.imgBack_Cart);
 
-        linCart_Cart = (LinearLayout) findViewById(R.id.linCart_Cart);
-
         listSelect_Cart = (ListView) findViewById(R.id.listSelect_Cart);
         adapter = new MenuSelectedAdapter();
         adapter.readContact();
@@ -76,7 +73,7 @@ public class MenuCartActivity extends AppCompatActivity {
         setListViewHeightBasedOnChildren(listSelect_Cart, 0);
 
         imgBack_Cart.setOnClickListener(Click);
-        linCart_Cart.setOnClickListener(Click);
+        linMenuAdd_Cart.setOnClickListener(Click);
     }
 
     class MenuSelectedAdapter extends BaseAdapter {
@@ -112,12 +109,10 @@ public class MenuCartActivity extends AppCompatActivity {
 
         public void readContact() {
             for (int i=0; i<MenuName.size() ; i++) {
-                addSelectedMenu(new MenuSelectedItem(MenuName.get(i), MenuPrice.get(i), MenuCount.get(i)));
+                if (Integer.parseInt(MenuCount.get(i)) != 0) {
+                    addSelectedMenu(new MenuSelectedItem(MenuName.get(i), MenuPrice.get(i), MenuCount.get(i)));
+                }
             }
-        }
-
-        public void DeleteMenu(int position) {
-            SelectedMenus.remove(position);
         }
     }
 
@@ -128,15 +123,24 @@ public class MenuCartActivity extends AppCompatActivity {
                 case R.id.imgBack_Cart:
                     Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
                     startActivity(intent);
-                case R.id.linCart_Cart:
-                    Intent intent1 = new Intent(getApplicationContext(), EmptyActivity.class);
+                    break;
+
+                case R.id.linMenuAdd_Cart:
+                    Intent intent1 = new Intent(getApplicationContext(), MenuActivity.class);
+                    intent1.putStringArrayListExtra("MenuName", MenuName);
+                    intent1.putStringArrayListExtra("MenuPrice", MenuPrice);
+                    intent1.putStringArrayListExtra("MenuCount", MenuCount);
+                    intent1.putExtra("Check", "OK");
                     startActivity(intent1);
+                    break;
             }
         }
     };
 
     public void SumPrice() {
         int Number = 0;
+        int count = -1;
+        strAllPrice = "";
         for (int i =0; i<MenuPrice.size(); i++) {
             Number = Integer.parseInt(MenuCount.get(i));
             char Temp[] = MenuPrice.get(i).toCharArray();
@@ -152,8 +156,7 @@ public class MenuCartActivity extends AppCompatActivity {
 
         String a = String.valueOf(AllPrice);
         char Temp[] = a.toCharArray();
-        int count = -1;
-        strAllPrice = "";
+
         for (int i=Temp.length-1; i>=0 ; i--) {
             count++;
             if (count == 3) {
@@ -165,6 +168,7 @@ public class MenuCartActivity extends AppCompatActivity {
                 strAllPrice += Temp[i];
             }
         }
+        AllPrice = 0;
     }
 
     public void setListViewHeightBasedOnChildren(ListView listView, int c) {
@@ -262,5 +266,4 @@ public class MenuCartActivity extends AppCompatActivity {
             tvCount_Cart.setText(count);
         }
     }
-
 }
