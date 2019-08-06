@@ -131,9 +131,8 @@ public class MenuActivity extends AppCompatActivity {
 
         public void readContact() {
             addMenu(new MenuItem("aaa","20,000", "0"));
+            addMenu(new MenuItem("bbb", "70,000", "0"));
             addMenu(new MenuItem("ccc","50,000", "0"));
-            addMenu(new MenuItem("bbb", "70,000", "0"));
-            addMenu(new MenuItem("bbb", "70,000", "0"));
         }
     }
 
@@ -142,6 +141,7 @@ public class MenuActivity extends AppCompatActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.imgBack:
+
                     break;
 
                 case R.id.linCart:
@@ -302,4 +302,6 @@ public class MenuActivity extends AppCompatActivity {
             }
         }
     }
+
+
 }

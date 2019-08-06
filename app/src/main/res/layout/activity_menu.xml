@@ -205,32 +205,32 @@
                 android:id="@+id/linCart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/cartround"
-                android:paddingLeft="64dp"
-                android:paddingRight="64dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/cartround"
                 android:elevation="4dp"
-                android:layout_marginTop="16dp">
+                android:orientation="horizontal"
+                android:paddingLeft="64dp"
+                android:paddingTop="8dp"
+                android:paddingRight="64dp"
+                android:paddingBottom="8dp">
 
                 <ImageView
                     android:id="@+id/imgCart"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/cart"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="-8dp"/>
+                    android:layout_marginLeft="-8dp"
+                    android:src="@drawable/cart" />
 
                 <TextView
                     android:id="@+id/tvCart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="장바구나 담기"
+                    android:layout_gravity="center"
+                    android:text="장바구니 담기"
                     android:textColor="#000000"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"/>
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
