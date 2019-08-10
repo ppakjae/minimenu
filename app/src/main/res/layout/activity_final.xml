@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FinalActivity"
@@ -9,46 +10,58 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="30dp"
+        android:layout_height="0dp"
         android:background="#ffffff"
-        android:elevation="10dp">
+        android:elevation="2dp"
+        android:layout_weight="1">
 
 
         <ImageView
             android:id="@+id/btnBack_receipt"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
             android:src="@drawable/back"
-            android:layout_alignParentLeft="true"/>
+            android:layout_alignParentBottom="true"
+            android:scaleType="fitXY"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="영수증"
-            android:textSize="20dp"
+            android:textSize="14sp"
             android:textColor="#000000"
             android:textStyle="bold"
-            android:layout_centerInParent="true"/>
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"/>
 
 
     </RelativeLayout>
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:overScrollMode="never"
+        android:layout_weight="6"
+        android:layout_gravity="center_horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginVertical="40dp">
 
             <RelativeLayout
+                android:id="@+id/rel_receipt"
                 android:layout_width="380dp"
                 android:layout_height="120dp"
-                android:background="@drawable/receipt"
                 android:layout_gravity="center_horizontal">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/receipt"
+                    android:scaleType="fitXY" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -85,16 +98,24 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@drawable/receipt_dialog_round"
-                android:layout_gravity="center_horizontal">
+                android:layout_gravity="center_horizontal"
+                android:layout_below="@id/rel_receipt"
+                android:elevation="10dp">
 
 
                 <ListView
                     android:id="@+id/list_receipt"
                     android:layout_width="match_parent"
-                    android:layout_height="70dp">
+                    android:layout_height="wrap_content"
+                    android:background="#ffffff"
+                    android:listSelector="@android:color/transparent"
+                    android:dividerHeight="1dp"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:paddingTop="16dp"
+                    android:scrollbars="none">
 
                 </ListView>
-
 
                 <View
                     android:layout_width="wrap_content"
@@ -103,11 +124,13 @@
 
 
                 <RelativeLayout
+                    android:id="@+id/rel_request"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="25dp">
 
                     <TextView
+                        android:id="@+id/requestBackColor"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:background="#FFE996"
@@ -124,7 +147,7 @@
                         android:layout_marginLeft="3dp"/>
 
                     <TextView
-                        android:id="@+id/txtRequire"
+                        android:id="@+id/txtRequestX"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="없음"
@@ -132,6 +155,15 @@
                         android:textStyle="bold"
                         android:textColor="#6E6E6E"
                         android:layout_alignParentRight="true"/>
+
+                    <TextView
+                        android:id="@+id/txtRequestExist"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:layout_below="@+id/requestBackColor"/>
 
                 </RelativeLayout>
 

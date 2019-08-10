@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -33,6 +34,8 @@ public class MenuCartActivity extends AppCompatActivity {
     TextView tvAllPrice_Cart;
     TextView tvAllCount_Cart;
 
+    EditText edtRequest_Cart;
+
     LinearLayout linMenuAdd_Cart;
     LinearLayout linCart_Cart;
 
@@ -54,6 +57,7 @@ public class MenuCartActivity extends AppCompatActivity {
 
         tvAllPrice_Cart = (TextView) findViewById(R.id.tvAllPrice_Cart);
         tvAllCount_Cart = (TextView) findViewById(R.id.tvAllCount_Cart);
+        edtRequest_Cart = (EditText)findViewById(R.id.edtRequest_Cart);
         linMenuAdd_Cart = (LinearLayout) findViewById(R.id.linMenuAdd_Cart);
         linCart_Cart = (LinearLayout) findViewById(R.id.linCart_Cart);
 
@@ -134,8 +138,9 @@ public class MenuCartActivity extends AppCompatActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.imgBack_Cart:
-                    Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+//                    startActivity(intent);
+                    onBackPressed();
                     break;
 
                 case R.id.linMenuAdd_Cart:
@@ -288,6 +293,12 @@ public class MenuCartActivity extends AppCompatActivity {
         public void setTvCount_Cart(String count) {
             tvCount_Cart.setText(count);
         }
+
+//        public String getTvAllPrice_Cart(){
+//            String s = "";
+//            s += tvAllPrice_Cart.getText();
+//            return s;
+//        }
     }
 
 
@@ -298,7 +309,7 @@ public class MenuCartActivity extends AppCompatActivity {
             Log.d("in", "in");
             if (result.getContents() == null) {
                 Log.d("null", "null");
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+//                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
                 getit();
 
             } else {
@@ -317,6 +328,9 @@ public class MenuCartActivity extends AppCompatActivity {
         intent1.putStringArrayListExtra("MenuName", MenuName);
         intent1.putStringArrayListExtra("MenuPrice", MenuPrice);
         intent1.putStringArrayListExtra("MenuCount", MenuCount);
+        intent1.putExtra("AllPrice", tvAllPrice_Cart.getText());
+        intent1.putExtra("request", edtRequest_Cart.getText().toString());
+        //getText의 반환값은 charsequence이므로 toString() 필요!!
         intent1.putExtra("Check", "OK");
         startActivity(intent1);
     }

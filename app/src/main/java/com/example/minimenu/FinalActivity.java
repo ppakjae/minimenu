@@ -10,8 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -23,9 +26,20 @@ public class FinalActivity extends AppCompatActivity {
     ArrayList<String> MenuName = new ArrayList<>();
     ArrayList<String> MenuPrice = new ArrayList<>();
     ArrayList<String> MenuCount = new ArrayList<>();
-    ArrayList<String> nMenuPrice = new ArrayList<>();
 
     ArrayList <MenuOrderedItem> OrderedMenus = new ArrayList<>();
+
+    TextView txtStoreName;
+    TextView txtTableNum;
+    TextView txtRequestX;
+    TextView txtRequestExist;
+    TextView txtPrice_receipt;
+    TextView txtDate_receipt;
+    TextView txtAddress_receipt;
+
+    RelativeLayout rel_request;
+    LinearLayout linFinal;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,15 +48,39 @@ public class FinalActivity extends AppCompatActivity {
 
         list_receipt = (ListView)findViewById(R.id.list_receipt);
 
+        txtStoreName = (TextView)findViewById(R.id.txtStoreName);
+        txtTableNum = (TextView)findViewById(R.id.txtTableNum);
+        txtRequestX = (TextView)findViewById(R.id.txtRequestX);
+        txtRequestExist = (TextView)findViewById(R.id.txtRequestExist);
+        txtPrice_receipt = (TextView)findViewById(R.id.txtPrice_receipt);
+        txtDate_receipt = (TextView)findViewById(R.id.txtDate_receipt);
+        txtAddress_receipt = (TextView)findViewById(R.id.txtAddress_receipt);
+
+        rel_request = (RelativeLayout)findViewById(R.id.rel_request);
+
         Intent intent = new Intent(this.getIntent());
 
         MenuName = intent.getStringArrayListExtra("MenuName");
         MenuPrice = intent.getStringArrayListExtra("MenuPrice");
         MenuCount = intent.getStringArrayListExtra("MenuCount");
+        String price = intent.getExtras().getString("AllPrice");
+        String request = intent.getExtras().getString("request");
+
+        txtPrice_receipt.setText(price);
+
+        if(request.equals("")){
+
+        } else{
+            txtRequestX.setText("");
+        }
+        txtRequestExist.setText(request);
 
         adapter = new MenuOrderedAdapter();
         adapter.readContact();
         list_receipt.setAdapter(adapter);
+
+        setListViewHeightBasedOnChildren(list_receipt, 0);
+
 
     }
 
@@ -107,11 +145,12 @@ public class FinalActivity extends AppCompatActivity {
 
         public void init(Context context) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            inflater.inflate(R.layout.menuselect_receipt,this,true);
+            inflater.inflate(R.layout.orderedmenus_receipt,this,true);
 
             tvOrderedMenu = (TextView) findViewById(R.id.tvOrderedMenu);
             tvOrderedPrice = (TextView) findViewById(R.id.tvOrderedPrice);
             tvOrderedCount = (TextView) findViewById(R.id.tvOrderedCount);
+
 
         }
 
@@ -127,6 +166,32 @@ public class FinalActivity extends AppCompatActivity {
             tvOrderedCount.setText(count);
         }
     }
+
+    public void setListViewHeightBasedOnChildren(ListView listView, int c) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+
+        int totalHeight = 0;
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.AT_MOST);
+
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            if (c == 0)
+                totalHeight += listItem.getMeasuredHeight() - 305;
+            else
+                totalHeight += listItem.getMeasuredHeight() - 12;
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
+    }
+
 
 
 }
