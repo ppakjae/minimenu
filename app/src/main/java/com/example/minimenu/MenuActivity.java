@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.menu.MenuAdapter;
+import android.support.v7.view.menu.MenuView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -34,9 +37,13 @@ public class MenuActivity extends AppCompatActivity {
 
     MenuAdapter adapter;
 
+    ArrayList<String> MenuNameParsed = new ArrayList<>();
+    ArrayList<String> MenuPriceParsed = new ArrayList<>();
+
     ArrayList<MenuItem> Menus = new ArrayList<MenuItem>();
 
     int ReceiveActivity =0;
+//    int MenuNameParsedSize = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,14 +58,28 @@ public class MenuActivity extends AppCompatActivity {
         tvTime = (TextView) findViewById(R.id.tvTime);
         tvPosition = (TextView) findViewById(R.id.tvPosition);
 
+        Intent intent = this.getIntent();
+
+        MenuNameParsed = intent.getStringArrayListExtra("MenuNameParsed");
+        MenuPriceParsed = intent.getStringArrayListExtra("MenuPriceParsed");
+
+        Toast.makeText(this, MenuNameParsed.size() + "",Toast.LENGTH_LONG).show();
+
+//        if(MenuNameParsed != null) {
+//            MenuNameParsedSize = MenuNameParsed.size();
+//        }
         listMenu = (ListView) findViewById(R.id.listMenu);
         adapter = new MenuAdapter();
-        adapter.readContact();
+
+//        adapter.readContact();
+
+        adapter.readContactTest(MenuNameParsed, MenuPriceParsed);
+
         listMenu.setAdapter(adapter);
 
         setListViewHeightBasedOnChildren(listMenu);
 
-        Intent intent = new Intent(this.getIntent());
+//        Intent intent = new Intent(this.getIntent());
         String Check = "";
         Check = intent.getStringExtra("Check");
         if (Check != null) {
@@ -131,10 +152,15 @@ public class MenuActivity extends AppCompatActivity {
 
         public void readContact() {
             addMenu(new MenuItem("aaa","20,000", "0"));
+            addMenu(new MenuItem("bbb", "70,000", "0"));
             addMenu(new MenuItem("ccc","50,000", "0"));
-            addMenu(new MenuItem("bbb", "70,000", "0"));
-            addMenu(new MenuItem("bbb", "70,000", "0"));
         }
+        public void readContactTest(ArrayList MenuNameParsed, ArrayList MenuPriceParsed){
+            for(int i = 0; i < MenuNameParsed.size(); i++){
+                addMenu(new MenuItem(MenuNameParsed.get(i).toString(), MenuPriceParsed.get(i).toString(), "0"));
+            }
+        }
+
     }
 
     View.OnClickListener Click = new View.OnClickListener() {
@@ -142,6 +168,7 @@ public class MenuActivity extends AppCompatActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.imgBack:
+                    onBackPressed();
                     break;
 
                 case R.id.linCart:
@@ -302,4 +329,6 @@ public class MenuActivity extends AppCompatActivity {
             }
         }
     }
+
+
 }

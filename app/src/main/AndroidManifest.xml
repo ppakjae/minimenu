@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.minimenu">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="true"
@@ -12,7 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".QR_Activity"></activity>
-        <activity android:name=".EmptyActivity" />
         <activity android:name=".FinalActivity" />
         <activity android:name=".MenuActivity"></activity>
         <activity android:name=".MenuCartActivity"></activity>
