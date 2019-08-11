@@ -213,9 +213,9 @@ public class MenuCartActivity extends AppCompatActivity {
             View listItem = listAdapter.getView(i, null, listView);
             listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
             if (c == 0)
-                totalHeight += listItem.getMeasuredHeight() - 305;
+                totalHeight += 290;
             else
-                totalHeight += listItem.getMeasuredHeight() - 12;
+                totalHeight += 12;
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
@@ -273,7 +273,7 @@ public class MenuCartActivity extends AppCompatActivity {
                                 MenuPrice.remove(i);
                                 MenuCount.remove(i);
                                 SelectedMenus.remove(i);
-                                setListViewHeightBasedOnChildren(listSelect_Cart, 1);
+                                setListViewHeightBasedOnChildren(listSelect_Cart, 0);
                             }
                         }
                     }

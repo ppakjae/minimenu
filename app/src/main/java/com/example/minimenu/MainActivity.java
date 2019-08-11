@@ -116,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<String> MenuNameParsed = new ArrayList<>();
             ArrayList<String> MenuPriceParsed = new ArrayList<>();
 
+//            txt.setText(s);
+
             receiveArray(s, MenuNameParsed, MenuPriceParsed);
 
             Intent intent = new Intent(context, MenuActivity.class);

@@ -183,6 +183,15 @@
 
             </ListView>
 
+            <View
+                android:id="@+id/view1_Cart"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/listMenu"
+                android:layout_marginLeft="48dp"
+                android:layout_marginRight="48dp"
+                android:background="#FFDCCE"/>
+
         </RelativeLayout>
 
     </ScrollView>

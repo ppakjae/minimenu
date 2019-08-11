@@ -209,7 +209,7 @@ public class MenuActivity extends AppCompatActivity {
         for (int i = 0; i < listAdapter.getCount() ; i++) {
             View listItem = listAdapter.getView(i, null, listView);
             listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += listItem.getMeasuredHeight() - 275;
+            totalHeight += 275;
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
