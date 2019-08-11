@@ -181,9 +181,9 @@ public class FinalActivity extends AppCompatActivity {
             View listItem = listAdapter.getView(i, null, listView);
             listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
             if (c == 0)
-                totalHeight += listItem.getMeasuredHeight() - 305;
+                totalHeight += 255;
             else
-                totalHeight += listItem.getMeasuredHeight() - 12;
+                totalHeight += 12;
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
@@ -191,7 +191,5 @@ public class FinalActivity extends AppCompatActivity {
         listView.setLayoutParams(params);
         listView.requestLayout();
     }
-
-
 
 }
