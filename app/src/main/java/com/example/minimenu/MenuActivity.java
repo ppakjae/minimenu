@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,8 @@ public class MenuActivity extends AppCompatActivity {
 
     ArrayList<String> MenuNameParsed = new ArrayList<>();
     ArrayList<String> MenuPriceParsed = new ArrayList<>();
+    ArrayList<String> MenuCountParsed = new ArrayList<>();
+    ArrayList<String> Temp = new ArrayList<>();
 
     ArrayList<MenuItem> Menus = new ArrayList<MenuItem>();
 
@@ -62,6 +65,21 @@ public class MenuActivity extends AppCompatActivity {
 
         MenuNameParsed = intent.getStringArrayListExtra("MenuNameParsed");
         MenuPriceParsed = intent.getStringArrayListExtra("MenuPriceParsed");
+        for (int i=0 ; i<MenuNameParsed.size() ; i++) {
+            MenuCountParsed.add(i, "0");
+        }
+
+        try {
+            String Check = intent.getStringExtra("Check");
+            if (Check.equals("OK")) {
+                Temp = intent.getStringArrayListExtra("MenuCountParsed");
+                for (int i =0; i<MenuNameParsed.size() ; i++) {
+                    MenuCountParsed.set(i, Temp.get(i));
+                }
+                ReceiveActivity = 1;
+            }
+        } catch (Exception e) { }
+
 
         Toast.makeText(this, MenuNameParsed.size() + "",Toast.LENGTH_LONG).show();
 
@@ -79,43 +97,8 @@ public class MenuActivity extends AppCompatActivity {
 
         setListViewHeightBasedOnChildren(listMenu);
 
-//        Intent intent = new Intent(this.getIntent());
-        String Check = "";
-        Check = intent.getStringExtra("Check");
-        if (Check != null) {
-            Log.d("aaa", "Check = NotNull");
-            MoreCart();
-        }
-        else {
-            Log.d("aaa", "Check = NULL");
-        }
-
         imgBack.setOnClickListener(Click);
         linCart.setOnClickListener(Click);
-    }
-
-    private void MoreCart() {
-
-        ArrayList<String> MenuName = new ArrayList<>();
-        ArrayList<String> MenuPrice = new ArrayList<>();
-        ArrayList<String> MenuCount = new ArrayList<>();
-
-        Intent intent = new Intent(this.getIntent());
-
-        MenuName = intent.getStringArrayListExtra("MenuName");
-        MenuPrice = intent.getStringArrayListExtra("MenuPrice");
-        MenuCount = intent.getStringArrayListExtra("MenuCount");
-
-        for (int i =0; i<adapter.getCount() ; i++) {
-            for (int j=0 ; j<MenuName.size() ; j++) {
-                if (MenuName.get(j).equals(Menus.get(i).getMenu())) {
-                    Menus.set(i, new MenuItem(MenuName.get(j), MenuPrice.get(j), MenuCount.get(j)));
-                    Log.d("Count", Menus.get(i).getCount());
-                }
-            }
-        }
-        ReceiveActivity = 1;
-        adapter.notifyDataSetChanged();
     }
 
     class MenuAdapter extends BaseAdapter {
@@ -150,14 +133,9 @@ public class MenuActivity extends AppCompatActivity {
             Menus.add(view);
         }
 
-        public void readContact() {
-            addMenu(new MenuItem("aaa","20,000", "0"));
-            addMenu(new MenuItem("bbb", "70,000", "0"));
-            addMenu(new MenuItem("ccc","50,000", "0"));
-        }
         public void readContactTest(ArrayList MenuNameParsed, ArrayList MenuPriceParsed){
             for(int i = 0; i < MenuNameParsed.size(); i++){
-                addMenu(new MenuItem(MenuNameParsed.get(i).toString(), MenuPriceParsed.get(i).toString(), "0"));
+                addMenu(new MenuItem(MenuNameParsed.get(i).toString(), MenuPriceParsed.get(i).toString(), MenuCountParsed.get(i).toString()));
             }
         }
 
@@ -177,11 +155,10 @@ public class MenuActivity extends AppCompatActivity {
                     ArrayList<String> MenuCount = new ArrayList<>();
 
                     for (int i =0; i<adapter.getCount() ; i++) {
-                        if (Menus.get(i).getCount() != "0") {
-                            MenuName.add(Menus.get(i).getMenu());
-                            MenuPrice.add(Menus.get(i).getPrice());
-                            MenuCount.add(Menus.get(i).getCount());
-                        }
+                        MenuName.add(Menus.get(i).getMenu());
+                        MenuPrice.add(Menus.get(i).getPrice());
+                        MenuCount.add(Menus.get(i).getCount());
+
                     }
 
                     Intent intent = new Intent(getApplicationContext(), MenuCartActivity.class);
@@ -252,6 +229,8 @@ public class MenuActivity extends AppCompatActivity {
             imgAdd = (ImageView) findViewById(R.id.imgAdd);
             imgSub = (ImageView) findViewById(R.id.imgSub);
             tvCount = (TextView) findViewById(R.id.tvCount);
+
+            Log.d("Receive", String.valueOf(ReceiveActivity));
 
             if (ReceiveActivity == 1) {
                 for (int i = 0; i < adapter.getCount(); i++) {
